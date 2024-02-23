@@ -5,27 +5,28 @@
   "description": "Unofficial Shazam Extension",
   "icon": "command-icon.png",
   "author": "antonengelhardt",
+  "version": "0.1.0",
+  "license": "MIT",
   "categories": [
     "Media"
   ],
-  "license": "MIT",
   "commands": [
     {
       "name": "index",
-      "title": "Get Song",
-      "subtitle": "Start to listen and get the current title playing",
+      "title": "Shazam",
+      "subtitle": "Get the current title playing",
       "description": "Start to listen and get the current title playing",
-      "mode": "no-view"
+      "mode": "view"
     }
   ],
   "dependencies": {
-    "@raycast/api": "^1.67.1",
-    "fluent-ffmpeg": "^2.1.2",
-    "mic": "git+https://github.com/antonengelhardt/mic.git",
-    "shazam-api": "^0.2.0"
+    "@raycast/api": "^1.68.1",
+    "@raycast/utils": "^1.12.5"
   },
   "devDependencies": {
+    "@raycast/api": "^1.68.1",
     "@raycast/eslint-config": "^1.0.6",
+    "@raycast/utils": "^1.12.5",
     "@types/node": "20.8.10",
     "@types/react": "18.2.27",
     "eslint": "^8.51.0",

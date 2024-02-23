@@ -1,0 +1,28 @@
+{
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "sourceLanguages": [
+                "swift"
+            ],
+            "args": [],
+            "cwd": "${workspaceFolder:shazam-raycast}/swift",
+            "name": "Debug SwiftAPI (swift)",
+            "program": "${workspaceFolder:shazam-raycast}/swift/.build/debug/SwiftAPI",
+            "preLaunchTask": "swift: Build Debug SwiftAPI (swift)"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "sourceLanguages": [
+                "swift"
+            ],
+            "args": [],
+            "cwd": "${workspaceFolder:shazam-raycast}/swift",
+            "name": "Release SwiftAPI (swift)",
+            "program": "${workspaceFolder:shazam-raycast}/swift/.build/release/SwiftAPI",
+            "preLaunchTask": "swift: Build Release SwiftAPI (swift)"
+        }
+    ]
+}
