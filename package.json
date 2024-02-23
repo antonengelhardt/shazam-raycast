@@ -12,15 +12,17 @@
   "commands": [
     {
       "name": "index",
-      "title": "Listen",
-      "subtitle": "Start to listen and get result",
-      "description": "Start to listen and receive the current title playing",
+      "title": "Get Song",
+      "subtitle": "Start to listen and get the current title playing",
+      "description": "Start to listen and get the current title playing",
       "mode": "no-view"
     }
   ],
   "dependencies": {
     "@raycast/api": "^1.67.1",
-    "node-audiorecorder": "^1.0.0"
+    "fluent-ffmpeg": "^2.1.2",
+    "mic": "git+https://github.com/antonengelhardt/mic.git",
+    "shazam-api": "^0.2.0"
   },
   "devDependencies": {
     "@raycast/eslint-config": "^1.0.6",
