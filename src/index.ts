@@ -1,4 +1,4 @@
-import { showHUD } from "@raycast/api";
+import { Detail } from "@raycast/api";
 import { usePromise } from "@raycast/utils";
 import { shazam } from "swift:../swift";
 
@@ -13,9 +13,11 @@ export default function Command() {
   const { isLoading, data, error } = usePromise(async () => {
     const media: ShazamMedia = await shazam();
 
-    return media.title;
+    return media;
 
   });
-  showHUD(isLoading ? "Listening..." : data || (error && `Error: ${error.message}`) || "No match found");
-  // return Detail({ markdown: isLoading ? "Listening..." : data || (error && `Error: ${error.message}`) || "Hello World" });
+
+  return Detail(
+    { markdown: isLoading ? "Listening..." :
+      data?.title + " by " + data?.artist || (error && `Error: ${error.message}`) || "No match found" });
 }

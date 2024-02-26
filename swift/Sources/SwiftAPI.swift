@@ -3,9 +3,34 @@ import AVFoundation
 import RaycastSwiftMacros
 import ShazamKit
 
-class Shazam : NSObject, ObservableObject, SHSessionDelegate {
+// Renamed @raycast function
+@raycast func shazam() async throws -> ShazamMedia? {
+    let shazamInstance = Shazam()
+    shazamInstance.session.delegate = shazamInstance
+    try await shazamInstance.startShazam()
+
+    sleep(1)
+
+    let matchedMediaItem = shazamInstance.match
+
+    // return the match or nil
+    if matchedMediaItem != nil {
+        let media = ShazamMedia(
+            title: matchedMediaItem?.title ?? "",
+            artist: matchedMediaItem?.artist ?? "",
+            appleMusicURL: matchedMediaItem?.appleMusicURL ?? URL(string: "https://music.apple.com")!,
+            artWorkURL: matchedMediaItem?.artworkURL ?? URL(string: "https://music.apple.com")!
+        )
+        return media
+    } else {
+        return nil
+    }
+}
+
+class Shazam : NSObject, ObservableObject {
+
     var session: SHSession
-    var match: SHMatch?
+    var match: SHMatchedMediaItem?
 
     override init() {
         self.session = SHSession()
@@ -24,14 +49,11 @@ class Shazam : NSObject, ObservableObject, SHSessionDelegate {
       let audioEngine = AVAudioEngine()
       let inputNode = audioEngine.inputNode
       let format = inputNode.inputFormat(forBus: 0)
-      // let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: 4096)
 
-      let signatureGenerator = SHSignatureGenerator()
+      inputNode.installTap(onBus: 0, bufferSize: 5000, format: format) { buffer, time in
 
-      inputNode.installTap(onBus: 0, bufferSize: 4096, format: format) { buffer, time in
-
-        // Append the buffer to the signature generator
-        try! signatureGenerator.append(buffer, at: time)
+        // Process the audio buffer
+        session.matchStreamingBuffer(buffer, at: time)
       }
 
       // Start the audio engine
@@ -42,42 +64,20 @@ class Shazam : NSObject, ObservableObject, SHSessionDelegate {
 
       // Stop the audio engine
       audioEngine.stop()
-
-      // Generate the signature
-      let signature = signatureGenerator.signature()
-
-      // Create a new Shazam match
-      session.match(signature)
     }
 }
 
-extension SHSessionDelegate {
-    func session(_ session: SHSession, didFind match: SHMatch) -> SHMatch? {
-        return match
+extension Shazam : SHSessionDelegate {
+    func session(_ session: SHSession, didFind match: SHMatch) {
+
+        let match = match.mediaItems.first
+
+        self.match = match
     }
 
     func session(_ session: SHSession, didNotFindMatchFor signature: SHSignature, error: Error?) {
         print("No match found")
     }
-}
-
-// Renamed @raycast function
-@raycast func shazam() async throws -> ShazamMedia? {
-    let shazamInstance = Shazam()
-    shazamInstance.session.delegate = shazamInstance
-    try await shazamInstance.startShazam()
-
-    let match = shazamInstance.match?.mediaItems.first
-
-    let media = ShazamMedia(
-        title: match?.title ?? "",
-        artist: match?.artist ?? "",
-        appleMusicURL: match?.appleMusicURL ?? URL(string: "https://music.apple.com")!,
-        artWorkURL: match?.artworkURL ?? URL(string: "https://music.apple.com")!
-    )
-
-    return media
-
 }
 
 struct ShazamMedia : Encodable {
