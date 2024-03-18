@@ -17,6 +17,21 @@ export default function Command() {
 
   });
 
+  // TODO: Use Detail component to show Artwork in the middle, title, artist and genres on the side and Apple Music Action
+  // return (
+  //   <Detail
+  //     markdown={isLoading ? "Listening..." :
+  //       data?.title + " by " + data?.artist || (error && `Error: ${error.message}`) || "No match found"}
+  //     metadata={
+  //       <Detail.Metadata>
+  //         <Detail.Metadata.Label title="Title" text={data?.title} />
+  //         <Detail.Metadata.Label title="Artist" text={data?.artist} />
+  //       </Detail.Metadata>
+  //     }
+
+  //   />;
+  // );
+
   return Detail(
     { markdown: isLoading ? "Listening..." :
       data?.title + " by " + data?.artist || (error && `Error: ${error.message}`) || "No match found" });
