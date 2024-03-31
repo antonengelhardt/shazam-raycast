@@ -17,14 +17,17 @@ import ShazamKit
 
         return ShazamMedia(
             title: (matchedMediaItem?.title!)!,
+            subtitle: (matchedMediaItem?.subtitle!)!,
             artist: (matchedMediaItem?.artist!)!,
+            genres: (matchedMediaItem?.genres)!,
+            creationDate: (matchedMediaItem?.creationDate!)!,
             appleMusicURL: (matchedMediaItem?.appleMusicURL!)!,
             artWorkURL: (matchedMediaItem?.artworkURL!)!
         )
       case .error(let error, let signature):
-        print("Error: \(error) for \(signature)")
+        throw error
       case .noMatch:
-        print("No match found")
+        return nil
 
     }
   } else {
@@ -36,7 +39,10 @@ import ShazamKit
 
 struct ShazamMedia : Encodable {
     var title: String
+    var subtitle: String
     var artist: String
+    var genres: [String]
+    var creationDate: Date
     var appleMusicURL: URL
     var artWorkURL: URL
 }

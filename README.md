@@ -1,3 +1,3 @@
 # Shazam
 
-Unofficial Shazam Extension
+Unofficial Shazam Extension for Raycast
