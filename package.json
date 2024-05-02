@@ -12,10 +12,17 @@
   ],
   "commands": [
     {
-      "name": "index",
-      "title": "Shazam",
-      "subtitle": "Get the current title playing",
-      "description": "Start to listen and get the current title playing",
+      "name": "listen",
+      "title": "Listen",
+      "subtitle": "Start to listen and get the current title playing",
+      "description": "This command will start to listen and get the current title playing, before it will be saved to your library",
+      "mode": "view"
+    },
+    {
+      "name": "library",
+      "title": "Library",
+      "subtitle": "Most recent Shazams",
+      "description": "View your most recent Shazams",
       "mode": "view"
     }
   ],
