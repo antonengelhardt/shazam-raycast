@@ -19,7 +19,7 @@ export default function Command() {
   const { isLoading, data, error } = usePromise(async () => {
     const media: ShazamMedia = await shazam();
 
-    // uncomment this until the swift permissions are done
+    // TODO: uncomment this until the swift permissions are done
     // const media: ShazamMedia = {
     //   scannedAt: new Date().getTime(),
     //   title: "Dona Nobis Pacem 2",
